@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+// App.js
+import React, { useState } from 'react';
+import FrontScreen from './FrontScreen'; // Corrected path
+import Questionnaire from './Questionnaire'; // Corrected path
+import ThankYou from './ThankYou'; // Import ThankYou component
 
-function App() {
+const App = () => {
+  const [isSurveyStarted, setIsSurveyStarted] = useState(false);
+  const [isSurveyCompleted, setIsSurveyCompleted] = useState(false);
+
+  const startSurvey = () => {
+    setIsSurveyStarted(true);
+  };
+
+  const completeSurvey = () => {
+    setIsSurveyCompleted(true);
+    setTimeout(() => {
+      setIsSurveyStarted(false);
+      setIsSurveyCompleted(false);
+    }, 5000); // Show Thank You screen for 5 seconds
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {!isSurveyStarted && !isSurveyCompleted && <FrontScreen startSurvey={startSurvey} />}
+      {isSurveyStarted && !isSurveyCompleted && <Questionnaire completeSurvey={completeSurvey} />}
+      {isSurveyCompleted && <ThankYou />}
     </div>
   );
-}
+};
 
 export default App;

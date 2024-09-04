@@ -58,7 +58,7 @@ const Questionnaire = ({ completeSurvey }) => {
   const handleSubmit = async () => {
     try {
       
-      await axios.post('http://localhost:5000/api/submit-survey', {
+      await axios.post('https://survey-backend-1.onrender.com/api/submit-survey', {
         sessionId,
         responses: { ...responses, status: 'COMPLETED' },
       });

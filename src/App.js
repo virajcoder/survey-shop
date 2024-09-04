@@ -1,8 +1,8 @@
-// App.js
+
 import React, { useState } from 'react';
-import FrontScreen from './FrontScreen'; // Corrected path
-import Questionnaire from './Questionnaire'; // Corrected path
-import ThankYou from './ThankYou'; // Import ThankYou component
+import FrontScreen from './FrontScreen';
+import Questionnaire from './Questionnaire'; 
+import ThankYou from './ThankYou'; 
 
 const App = () => {
   const [isSurveyStarted, setIsSurveyStarted] = useState(false);
@@ -17,7 +17,7 @@ const App = () => {
     setTimeout(() => {
       setIsSurveyStarted(false);
       setIsSurveyCompleted(false);
-    }, 5000); // Show Thank You screen for 5 seconds
+    }, 5000); 
   };
 
   return (

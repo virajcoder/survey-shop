@@ -70,9 +70,12 @@ const Questionnaire = ({ completeSurvey }) => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
+    <div className="flex flex-col items-center p-4 justify-center bg-gray-100 min-h-screen">
       {!showConfirmation ? (
         <>
+        <h1 className="text-4xl font-bold mb-20">
+            Customer Servey
+          </h1>
           <h2 className="text-xl font-semibold mb-4">
             Question {currentQuestionIndex + 1} / {questions.length}
           </h2>

@@ -19,6 +19,7 @@ const Question = ({ question, onAnswer, answer }) => {
         />
       ) : (
         <textarea
+          type="text"
           value={answer || ''}
           onChange={handleChange}
           className="border border-gray-300 p-2 rounded w-full"

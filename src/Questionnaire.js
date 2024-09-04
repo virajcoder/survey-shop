@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Question from './Question';
@@ -58,7 +59,7 @@ const Questionnaire = ({ completeSurvey }) => {
   const handleSubmit = async () => {
     try {
       
-      await axios.post('process.env.REACT_APP_BACKEND_URL', {
+      await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/submit-survey', {
         sessionId,
         responses: { ...responses, status: 'COMPLETED' },
       });

@@ -1,5 +1,3 @@
-/* eslint-disable no-template-curly-in-string */
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Question from './Question';
 import Confirmation from './Confirmation';
@@ -56,61 +54,58 @@ const Questionnaire = ({ completeSurvey }) => {
     handleNext();
   };
 
-  const handleSubmit = async () => {
-    try {
-      
-      await axios.post('${process.env.REACT_APP_BACKEND_URL}/api/submit-survey', {
-        sessionId,
-        responses: { ...responses, status: 'COMPLETED' },
-      });
-      localStorage.setItem(sessionId, JSON.stringify({ ...responses, status: 'COMPLETED' }));
-      completeSurvey();
-    } catch (err) {
-      setError('Failed to submit the survey. Please try again.');
-    }
+  const handleSubmit = () => {
+    // Save responses to local storage with a completion status
+    localStorage.setItem(sessionId, JSON.stringify({ ...responses, status: 'COMPLETED' }));
+    
+    // Show confirmation message
+    alert('Thank you for completing the survey!');
+    
+    // Call the parent function to complete the survey
+    completeSurvey();
   };
 
   return (
-    <div className="flex flex-col items-center p-4 justify-center bg-gray-100 min-h-screen">
-      {!showConfirmation ? (
-        <>
-        <h1 className="text-4xl font-bold mb-20">
-            Customer Servey
-          </h1>
-          <h2 className="text-xl font-semibold mb-4">
-            Question {currentQuestionIndex + 1} / {questions.length}
-          </h2>
-          <Question
-            question={questions[currentQuestionIndex]}
-            onAnswer={handleAnswer}
-            answer={responses[questions[currentQuestionIndex].id]}
-          />
-          {error && <p className="text-red-500 mt-2">{error}</p>}
-          <div className="mt-4 space-x-2">
-            <button
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-              onClick={handlePrevious}
-              disabled={currentQuestionIndex === 0}
-            >
-              Previous
-            </button>
-            <button
-              className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-              onClick={handleSkip}
-            >
-              Skip
-            </button>
-            <button
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              onClick={handleNext}
-            >
-              {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
-            </button>
-          </div>
-        </>
-      ) : (
-        <Confirmation onSubmit={handleSubmit} onCancel={() => setShowConfirmation(false)} />
-      )}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+        <h1 className="text-2xl font-bold text-center mb-4">Customer Survey</h1>
+        {!showConfirmation ? (
+          <>
+            <h2 className="text-xl font-semibold mb-4 text-center">
+              Question {currentQuestionIndex + 1} / {questions.length}
+            </h2>
+            <Question
+              question={questions[currentQuestionIndex]}
+              onAnswer={handleAnswer}
+              answer={responses[questions[currentQuestionIndex].id]}
+            />
+            {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+            <div className="mt-4 flex justify-center space-x-2">
+              <button
+                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                onClick={handlePrevious}
+                disabled={currentQuestionIndex === 0}
+              >
+                Previous
+              </button>
+              <button
+                className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+                onClick={handleSkip}
+              >
+                Skip
+              </button>
+              <button
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                onClick={handleNext}
+              >
+                {currentQuestionIndex === questions.length - 1 ? 'Finish' : 'Next'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <Confirmation onSubmit={handleSubmit} onCancel={() => setShowConfirmation(false)} />
+        )}
+      </div>
     </div>
   );
 };
